@@ -1,0 +1,72 @@
+plugins {
+    id 'com.android.application'
+}
+
+android {
+    namespace 'com.example.myapplication'
+    compileSdk 33
+
+    defaultConfig {
+        applicationId "com.example.myapplication"
+        minSdk 24
+        targetSdk 33
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        /**/
+//        externalNativeBuild {
+//            cmake {
+//                cppFlags "-std=c++11 -frtti -fexceptions"
+//                arguments "-DANDROID_STL=c++_shared"
+//                //abiFilters 'armeabi-v7a','arm64-v8a'
+//            }
+//        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    /**/
+    sourceSets {
+        main {
+            //jni.srcDirs = ["src/main/cpp"] //指定c/c++源码位置
+            jniLibs.srcDirs = ['src/main/jniLibs']
+            //jniLibs.srcDirs = ['libs']
+        }
+    }
+
+//    externalNativeBuild {
+//        cmake {
+//            path file('CMakeLists.txt')
+//        }
+//    }
+    packagingOptions {
+        //排除法
+        //exclude '指定好上面path后的路径'
+        exclude 'META-INF/*.*'
+        //指定法
+        ///pickFirst '指定你想用的那个路径'
+    }
+    ndkVersion '25.1.8937393'
+}
+
+dependencies {
+
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'com.google.android.material:material:1.8.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+//    implementation files('libs\\jna.jar')
+    implementation files('libs\\jna-platform.jar')
+    implementation files('libs\\jna-min.jar')
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+}
